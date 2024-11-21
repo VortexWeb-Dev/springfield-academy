@@ -87,8 +87,9 @@
 
             foreach ($sidebar_items as $item) {
                 $active_class = $page_url == $item['url'] ? 'active pl-4' : '';
+                $target = $item['target'] ?? '_self';
                 echo "<li class='nav-item border-bottom'>
-                        <a class='nav-link $active_class text-decoration-none' href='{$item['url']}'>
+                        <a class='nav-link $active_class text-decoration-none' href='{$item['url']}' target=$target>
                         <i class='{$item['icon']} mr-2'></i>
                         {$item['label']}
                         </a>
