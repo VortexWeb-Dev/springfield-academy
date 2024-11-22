@@ -73,6 +73,7 @@
                 // ['label' => "My Rating", 'url' => 'rating.php', 'icon' => 'bi bi-star-fill'],
                 // ['label' => "My Tests", 'url' => 'tests.php', 'icon' => 'bi bi-clipboard-fill'],
                 ['label' => "My Courses", 'url' => 'courses.php', 'icon' => 'bi bi-book-fill'],
+                ['label' => "Video Lessons", 'url' => 'video_lessons.php', 'icon' => 'bi bi-play-btn-fill'],
                 // ['label' => "My Groups", 'url' => 'groups.php', 'icon' => 'bi bi-people-fill'],
                 // ['label' => "My Grades", 'url' => 'grades.php', 'icon' => 'bi bi-clipboard-check-fill'] ,
                 // ['label' => "My Checks", 'url' => 'checks.php', 'icon' => 'bi bi-check-all'],

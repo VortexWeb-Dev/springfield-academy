@@ -4,9 +4,9 @@ function getDatabaseConnection()
 {
     //Database connection details
     $servername = 'localhost'; // Change to your actual DB host
-    $username = 'u884492537_academy'; // Your DB username
-    $password = 'H&w6sw7v7lw'; // Your DB password
-    $dbname = 'u884492537_academy'; // Your DB name
+    $username = 'root'; // Your DB username
+    $password = ''; // Your DB password
+    $dbname = 'academy'; // Your DB name
     
     //$servername = "localhost";
     //$username = "root";

@@ -20,7 +20,7 @@
   font-size: 0.875rem;
 }
 
-.add-course-btn {
+.add-course-btn, .add-video-btn {
   display: inline-flex;
   align-items: center;
   background-color: #3b82f6;
@@ -34,47 +34,49 @@
   transition: background-color 0.2s;
 }
 
-.add-course-btn:hover {
+.add-course-btn:hover, .add-video-btn:hover {
   background-color: #2563eb;
   color: #ffffff;
   text-decoration: none;
 }
 
-.add-course-btn svg {
+.add-course-btn svg, .add-video-btn svg {
+  width: 1rem;
+  height: 1rem;
   margin-right: 0.5rem;
 }
 
 /* Course grid styles */
-.course-grid {
+.course-grid, .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
 /* Course card styles */
-.course-card {
+.course-card, .video-card {
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   overflow: hidden;
 }
 
-.course-header {
+.course-header, .video-header {
   padding: 1.5rem;
   border-bottom: 1px solid #e5e7eb;
 }
 
-.course-title {
+.course-title, .video-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #111827;
 }
 
-.course-content {
+.course-content, .video-content {
   padding: 1.5rem;
 }
 
-.course-description {
+.course-description, .video-description {
   font-size: 0.875rem;
   color: #6b7280;
   margin-bottom: 0.75rem;
@@ -86,7 +88,7 @@
   color: #111827;
 }
 
-.course-footer {
+.course-footer, .video-footer {
   display: flex;
   justify-content: space-between;
   padding: 1rem 1.5rem;
@@ -140,7 +142,7 @@
     margin-bottom: 1rem;
   }
 
-  .add-course-btn {
+  .add-course-btn, .add-video-btn {
     width: 100%;
   }
 }

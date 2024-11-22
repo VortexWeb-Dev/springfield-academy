@@ -57,6 +57,7 @@
                 ['label' => "Courses", 'url' => 'manage_courses.php', 'icon' => 'bi bi-book-fill'],
                 // ['label' => "Modules", 'url' => 'manage_modules.php', 'icon' => 'bi bi-columns-gap'],
                 ['label' => "Lessons", 'url' => 'manage_lessons.php', 'icon' => 'bi bi-card-checklist'],
+                ['label' => "Video Lessons", 'url' => 'manage_video_lessons.php', 'icon' => 'bi bi-play-btn-fill'],
                 // ['label' => "Certificates", 'url' => 'manage_certificates.php', 'icon' => 'bi bi-mortarboard-fill'],
                 // ['label' => "Quizzes", 'url' => 'manage_quizzes.php', 'icon' => 'bi bi-puzzle-fill'],
                 ['label' => "Help", 'url' => 'help.php', 'icon' => 'bi bi-question-circle-fill'],
