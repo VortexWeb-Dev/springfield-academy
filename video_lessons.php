@@ -60,12 +60,19 @@
             font-size: 1rem;
             color: #6c757d;
             margin: 10px 0;
-            flex-grow: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
+            /* Show only 3 lines */
+            transition: max-height 0.3s ease;
+        }
+
+        .video-card-text.expanded {
+            -webkit-line-clamp: unset;
+            /* Remove line clamping */
+            max-height: none;
         }
 
         .error {
@@ -116,22 +123,16 @@
 
                                 $imageUrl = !empty($video['image_url']) ? htmlspecialchars($video['image_url']) : 'https://cdn.pixabay.com/photo/2018/02/27/10/49/training-3185170_1280.jpg';
                                 echo '<div class="col-md-4 mb-4">
-                                        <div class="video-card">
-                                            <img src="' . $imageUrl . '" alt="video Image" class="card-img-top">
-                                            <div class="video-card-body">
-                                                <h5 class="video-card-title">' . htmlspecialchars($video['title']) . '</h5>
-                                                <p class="video-card-text">' . htmlspecialchars($video['description']) . '</p>
-                                                <a href="#" 
-                                                class="btn btn-primary play-btn" 
-                                                data-toggle="modal" 
-                                                data-target="#videoModal" 
-                                                data-url="' . htmlspecialchars($video['youtube_link']) . '">
-                                                Play
-                                                </a>
-
-                                            </div>
+                                    <div class="video-card">
+                                        <img src="' . $imageUrl . '" alt="video Image" class="card-img-top">
+                                        <div class="video-card-body">
+                                            <h5 class="video-card-title">' . htmlspecialchars($video['title']) . '</h5>
+                                            <p class="video-card-text" id="desc-' . htmlspecialchars($video['id']) . '">' . htmlspecialchars($video['description']) . '</p>
+                                            <a href="javascript:void(0);" class="read-more" data-id="' . htmlspecialchars($video['id']) . '">Read more...</a>
+                                            <a href="#" class="btn btn-primary play-btn" data-toggle="modal" data-target="#videoModal" data-url="' . htmlspecialchars($video['youtube_link']) . '">Play</a>
                                         </div>
-                                    </div>';
+                                    </div>
+                                </div>';
                             }
                         } else {
                             echo '<p>No videos available.</p>';
@@ -185,6 +186,20 @@
             $('#videoModal').on('hidden.bs.modal', function() {
                 // Remove the video URL when the modal is closed
                 $('#videoIframe').attr('src', '');
+            });
+        });
+
+        $(document).ready(function() {
+            $('.read-more').on('click', function() {
+                var id = $(this).data('id');
+                var description = $('#desc-' + id);
+                if (description.hasClass('expanded')) {
+                    description.removeClass('expanded');
+                    $(this).text('Read more...');
+                } else {
+                    description.addClass('expanded');
+                    $(this).text('Read less');
+                }
             });
         });
     </script>
