@@ -120,6 +120,12 @@
 
                         if ($result->num_rows > 0) {
                             while ($video = $result->fetch_assoc()) {
+                                $videoUrl = '';
+                                if (!empty($video['youtube_link'])) {
+                                    $videoUrl = htmlspecialchars($video['youtube_link']);
+                                } elseif (!empty($video['video_path'])) {
+                                    $videoUrl = htmlspecialchars($video['video_path']);
+                                }
 
                                 $imageUrl = !empty($video['image_url']) ? htmlspecialchars($video['image_url']) : 'https://cdn.pixabay.com/photo/2018/02/27/10/49/training-3185170_1280.jpg';
                                 echo '<div class="col-md-4 mb-4">
@@ -129,7 +135,7 @@
                                             <h5 class="video-card-title">' . htmlspecialchars($video['title']) . '</h5>
                                             <p class="video-card-text" id="desc-' . htmlspecialchars($video['id']) . '">' . htmlspecialchars($video['description']) . '</p>
                                             <a href="javascript:void(0);" class="read-more" data-id="' . htmlspecialchars($video['id']) . '">Read more...</a>
-                                            <a href="#" class="btn btn-primary play-btn" data-toggle="modal" data-target="#videoModal" data-url="' . htmlspecialchars($video['youtube_link']) . '">Play</a>
+                                            <a href="#" class="btn btn-primary play-btn" data-toggle="modal" data-target="#videoModal" data-url="' . $videoUrl . '" data-type="' . (!empty($video['youtube_link']) ? 'youtube' : 'local') . '">Play</a>
                                         </div>
                                     </div>
                                 </div>';
