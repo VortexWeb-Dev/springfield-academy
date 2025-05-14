@@ -12,25 +12,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
     $youtube_link = isset($_POST['youtube_link']) ? trim($_POST['youtube_link']) : '';
 
-    $query = "INSERT INTO videos (title, description, youtube_link) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($query);
-
-    if ($stmt === false) {
-        die("Prepare failed: " . htmlspecialchars($conn->error));
+    if (empty($youtube_link) && empty($_FILES['video_file']['name'])) {
+        echo "Error: You must provide either a video file or a YouTube link.";
+        exit;
     }
 
-    // Bind parameters
-    $stmt->bind_param('sss', $title, $description, $youtube_link);
+    if ((isset($_FILES['video_file']) && $_FILES['video_file']['error'] == UPLOAD_ERR_OK)) {
+        $uploadDir = './uploads/';
 
-    // Attempt to execute the prepared statement
-    if ($stmt->execute()) {
-        header("Location: manage_video_lessons.php");
-        exit();
-    } else {
-        echo "Error: Could not execute query: $query. " . htmlspecialchars($stmt->error);
+        $videoFileTmpPath = $_FILES['video_file']['tmp_name'];
+        $videoFileName = $_FILES['video_file']['name'];
+        $uniqueName = uniqid() . '_' . basename($videoFileName);
+        $videoFileDestination = $uploadDir . $uniqueName;
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if (move_uploaded_file($videoFileTmpPath, $videoFileDestination)) {
+
+            $query = "INSERT INTO videos (title, description, youtube_link, video_path) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+
+            if ($stmt === false) {
+                die("Prepare failed: " . htmlspecialchars($conn->error));
+            }
+
+            $video_path = !empty($videoFileDestination) ? $videoFileDestination : null;
+            // Bind parameters
+            $stmt->bind_param('ssss', $title, $description, $youtube_link, $videoFileDestination);
+
+            // Attempt to execute the prepared statement
+            if ($stmt->execute()) {
+                header("Location: manage_video_lessons.php");
+                exit();
+            } else {
+                echo "Error: Could not execute query: $query. " . htmlspecialchars($stmt->error);
+            }
+
+            $stmt->close();
+        } else {
+            echo "Error: Could not move the uploaded file.";
+        }
     }
-
-    $stmt->close();
 }
 
 $conn->close();
@@ -104,7 +128,7 @@ $result = $conn->query($query);
                     <hr>
                     <div class="card">
                         <div class="row align-items-center">
-                            <form action="./add_video.php" method="post" class="col-12">
+                            <form action="./add_video.php" method="post" enctype="multipart/form-data" class="col-12">
                                 <div class="form-group">
                                     <label for="title">Video Title</label>
                                     <input type="text" class="form-control" id="title" name="title" required>
@@ -114,11 +138,13 @@ $result = $conn->query($query);
                                     <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="youtube_link">Youtube Embedded URL</label>
-                                    <input type="text" class="form-control" id="youtube_link" name="youtube_link" placeholder="https://www.youtube.com/embed/SK6eny9PPpU" required>
+                                    <label for="video_file">Upload Video File</label>
+                                    <input type="file" class="form-control-file" id="video_file" name="video_file" accept="video/*">
                                 </div>
-
-
+                                <div class="form-group">
+                                    <label for="youtube_link">Youtube Embedded URL</label>
+                                    <input type="text" class="form-control" id="youtube_link" name="youtube_link" placeholder="https://www.youtube.com/embed/SK6eny9PPpU">
+                                </div>
 
                                 <input type="hidden" id="selectedLessons" name="selected_lessons">
 
